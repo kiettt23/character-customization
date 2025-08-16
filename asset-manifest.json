@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/character-customization/static/css/main.b0f94a25.css",
-    "main.js": "/character-customization/static/js/main.5de30d73.js",
+    "main.js": "/character-customization/static/js/main.e64f6b4b.js",
     "index.html": "/character-customization/index.html",
     "main.b0f94a25.css.map": "/character-customization/static/css/main.b0f94a25.css.map",
-    "main.5de30d73.js.map": "/character-customization/static/js/main.5de30d73.js.map"
+    "main.e64f6b4b.js.map": "/character-customization/static/js/main.e64f6b4b.js.map"
   },
   "entrypoints": [
     "static/css/main.b0f94a25.css",
-    "static/js/main.5de30d73.js"
+    "static/js/main.e64f6b4b.js"
   ]
 }
