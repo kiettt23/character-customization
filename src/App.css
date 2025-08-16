@@ -1,38 +1,324 @@
-.App {
+/* ====== 1) RESET & CSS VARIABLES ====== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* Colors */
+  --bg: #f8fafc;
+  /* slate-50 */
+  --panel: #ffffff;
+  /* white card */
+  --card: #f1f5f9;
+  /* slate-100 */
+  --muted: #64748b;
+  /* slate-500 */
+  --line: #e2e8f0;
+  /* slate-200 border */
+  --brand: #3b82f6;
+  /* blue-500 */
+  --brand-2: #06b6d4;
+  /* cyan-500 */
+  --text: #0f172a;
+  /* slate-900 */
+  --text-dim: #334155;
+  /* slate-700 */
+
+  /* Shadows & effects */
+  --shadow: 0 4px 12px rgba(0, 0, 0, .06);
+
+  /* Checker bg */
+  --checker-a: rgba(148, 163, 184, .16);
+  /* ô đậm */
+  --checker-b: rgba(148, 163, 184, .06);
+  /* ô nhạt */
+  --checker-size: 14px;
+}
+
+/* ============ 2) BASE ============ */
+body {
+  background:
+    radial-gradient(1200px 600px at 10% -10%, rgba(59, 130, 246, .15), transparent 60%),
+    radial-gradient(1000px 500px at 120% 0%, rgba(6, 182, 212, .12), transparent 55%),
+    var(--bg);
+  color: var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  line-height: 1.5;
+}
+
+/* ======== 3) LAYOUT CONTAINERS ======== */
+.app-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.site-header {
+  margin-bottom: 20px;
+}
+
+.site-header h1 {
   text-align: center;
+  letter-spacing: .02em;
+  font-weight: 700;
+  font-size: 2.5rem;
+  color: var(--text);
+  margin-bottom: 8px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.site-header p {
+  text-align: center;
+  font-size: 15px;
+  color: var(--text-dim);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+/* ======== 4) MAIN DISPLAY GRID ======== */
+.main-display {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 20px;
+  padding: 16px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  align-items: start;
+  /* giúp sticky hoạt động đúng */
+}
+
+/* Sticky cho cột avatar (desktop) */
+#avatar-preview {
+  position: sticky;
+  top: 16px;
+  align-self: start;
+  height: fit-content;
+}
+
+#avatar-preview h2,
+#parts h2 {
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+@media (max-width: 900px) {
+  .main-display {
+    grid-template-columns: 1fr;
+  }
+
+  #avatar-preview {
+    position: static;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* ======== 5) AVATAR PANEL ======== */
+.avatar {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 12px;
+  display: grid;
+  place-items: center;
+  box-shadow: var(--shadow);
+}
+
+.canvas {
+  position: relative;
+  width: 320px;
+  height: 320px;
+  border-radius: 14px;
+  border: 1px dashed #d2d9e3;
+  background:
+    radial-gradient(240px 240px at 50% 40%, rgba(99, 102, 241, .12), transparent 65%);
+}
+
+.canvas img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.avatar:hover .canvas {
+  transform: scale(1.15);
+  transition: transform 0.2s ease;
+  z-index: 50;
+}
+
+/* ======== 6) PART LIST ======== */
+.list-option {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 12px;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow);
+}
+
+.list-option h2 {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: .02em;
+  color: var(--text-dim);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.list-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(56px, 1fr));
+  gap: 12px;
+  overflow: visible;
+}
+
+/* ======== 7) TILE (item lựa chọn) ======== */
+.tile {
+  position: relative;
+  border: 1px solid #d2d9e3;
+  border-radius: 12px;
+  padding: 6px;
+  background: #e9eef5;
+  cursor: pointer;
+  transition: transform .18s ease, box-shadow .18s ease, outline-color .18s ease;
+  will-change: transform;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .04);
+}
+
+.tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+  filter:
+    drop-shadow(0 0 1px rgba(0, 0, 0, .22)) drop-shadow(0 2px 4px rgba(0, 0, 0, .10));
+}
+
+/* Hover/Focus (desktop) */
+@media (hover: hover) and (pointer: fine) {
+
+  .tile:hover,
+  .tile:focus-visible {
+    transform: scale(2);
+    transform-origin: center;
+    z-index: 20;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, .18);
+    outline: 2px solid var(--brand);
+  }
+}
+
+/* Lựa chọn đang active */
+.tile.selected {
+  outline: 2px solid var(--brand);
+  box-shadow: 0 8px 18px rgba(59, 130, 246, .15);
+}
+
+/* ======== 8) BUTTONS ======== */
+.actions {
   display: flex;
-  flex-direction: column;
+  gap: 10px;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.btn {
+  appearance: none;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: linear-gradient(180deg, rgba(99, 102, 241, .25), rgba(99, 102, 241, .08));
+  color: var(--text);
+  padding: 8px 12px;
+  cursor: pointer;
+  font-weight: 600;
+  letter-spacing: .02em;
+  transition:
+    transform .12s ease,
+    box-shadow .12s ease,
+    background .12s ease,
+    border-color .12s ease;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px rgba(99, 102, 241, .22);
+  border-color: rgba(99, 102, 241, .6);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn-random {
+  appearance: none;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--brand-2), var(--brand));
+  color: #fff;
+  padding: 14px 22px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: .02em;
+  cursor: pointer;
+  display: block;
+  margin: 16px auto 0;
+  gap: 8px;
+  transition:
+    transform .12s ease,
+    box-shadow .12s ease,
+    background .12s ease,
+    filter .12s ease;
+}
+
+
+.btn-random:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 16px rgba(6, 182, 212, 0.35);
+  filter: brightness(1.05);
+}
+
+.btn-random:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 8px rgba(6, 182, 212, 0.25);
+}
+
+/* ======== 9) UTILITIES ======== */
+/* Checker nền (áp dụng cho .canvas hoặc .tile khi cần) */
+.bg-checker {
+  background-image:
+    linear-gradient(45deg, var(--checker-a) 25%, transparent 25%),
+    linear-gradient(-45deg, var(--checker-a) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, var(--checker-a) 75%),
+    linear-gradient(-45deg, transparent 75%, var(--checker-a) 75%);
+  background-size: var(--checker-size) var(--checker-size);
+  background-position:
+    0 0,
+    0 calc(var(--checker-size)/2),
+    calc(var(--checker-size)/2) calc(-1 * var(--checker-size)/2),
+    calc(-1 * var(--checker-size)/2) 0;
+  border-color: #d2d9e3;
+}
+
+/* ======== 10) SCROLLBAR ======== */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 163, 184, .35) transparent;
+}
+
+*::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, .35);
+  border-radius: 999px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
 }
