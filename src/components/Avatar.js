@@ -21,17 +21,23 @@ function Avatar({
       />
       <img
         style={{ zIndex: 2 }}
-        src={`/images/clothes/layer_1/${clothing1}.png`}
+        src={
+          `/images/clothes/layer_1/${clothing1}.png`
+        }
         alt={`clothing1-${clothing1}`}
       />
       <img
         style={{ zIndex: 3 }}
-        src={`/images/clothes/layer_2/${clothing2}.png`}
+        src={
+          `/images/clothes/layer_2/${clothing2}.png`
+        }
         alt={`clothing2-${clothing2}`}
       />
       <img
         style={{ zIndex: 4 }}
-        src={`/images/clothes/layer_3/${clothing3}.png`}
+        src={
+          `/images/clothes/layer_3/${clothing3}.png`
+        }
         alt={`clothing3-${clothing3}`}
       />
       <img
@@ -39,7 +45,11 @@ function Avatar({
         src={`/images/mouths/${mouths}.png`}
         alt={`mouths-${mouths}`}
       />
-      <img style={{ zIndex: 5.5 }} src={`/images/noses/1.png`} alt="nose" />
+      <img
+        style={{ zIndex: 5.5 }}
+        src={`/images/noses/1.png`}
+        alt="nose"
+      />
       <img
         style={{ zIndex: 6 }}
         src={`/images/eyes/${eyes}.png`}
@@ -57,7 +67,9 @@ function Avatar({
       />
       <img
         style={{ zIndex: 9 }}
-        src={`/images/accessories/glasses/${glasses}.png`}
+        src={
+          `/images/accessories/glasses/${glasses}.png`
+        }
         alt={`glasses-${glasses}`}
       />
       <img
