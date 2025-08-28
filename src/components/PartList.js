@@ -1,28 +1,24 @@
-import React from "react";
+import React, { useMemo } from "react";
 
-function PartList({
-  title, // Tiêu đề hiển thị cho danh sách
-  partKey, // Tên thư mục ảnh (body, eyes, hair,...)
-  total, // Tổng số lượng ảnh
-  value, // Index ảnh đang chọn
-  onChange, // Callback
-}) {
-  // Tạo mảng các số thứ tự ảnh thật, từ 1 tới total
-  // Ví dụ total = 6 => items = [1, 2, 3, 4, 5, 6]
+function PartList({ title, partKey, total, value, onChange }) {
   const items = Array.from({ length: total }, (_, i) => i + 1);
 
-  const folder =
-    partKey === "clothing1"
-      ? "clothes/layer_1"
-      : partKey === "clothing2"
-      ? "clothes/layer_2"
-      : partKey === "clothing3"
-      ? "clothes/layer_3"
-      : partKey === "glasses"
-      ? "accessories/glasses"
-      : partKey === "hats"
-      ? "accessories/hats"
-      : partKey;
+  const folder = useMemo(() => {
+    switch (partKey) {
+      case "clothing1":
+        return "clothes/layer_1";
+      case "clothing2":
+        return "clothes/layer_2";
+      case "clothing3":
+        return "clothes/layer_3";
+      case "glasses":
+        return "accessories/glasses";
+      case "hats":
+        return "accessories/hats";
+      default:
+        return partKey;
+    }
+  }, [partKey]);
 
   return (
     <div className="list-option">
