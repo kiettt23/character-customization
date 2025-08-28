@@ -1,11 +1,53 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import "./App.css";
 import Avatar from "./components/Avatar";
 import PartList from "./components/PartList";
-import { total } from "./total";
+
+const parts = {
+  body: {
+    title: "Body",
+    total: 17,
+  },
+  eyes: {
+    title: "Eyes",
+    total: 17,
+  },
+  hair: {
+    title: "Hair",
+    total: 73,
+  },
+  mouths: {
+    title: "Mouths",
+    total: 24,
+  },
+  eyebrows: {
+    title: "Eyebrows",
+    total: 15,
+  },
+  clothing1: {
+    title: "Clothing 1",
+    total: 5,
+  },
+  clothing2: {
+    title: "Clothing 2",
+    total: 5,
+  },
+  clothing3: {
+    title: "Clothing 3",
+    total: 9,
+  },
+  glasses: {
+    title: "Glasses",
+    total: 17,
+  },
+  hats: {
+    title: "Hats",
+    total: 28,
+  },
+};
 
 function App() {
-  const [state, setState] = useState({
+  const [avatar, setAvatar] = useState({
     body: 1,
     eyes: 1,
     hair: 1,
@@ -22,53 +64,19 @@ function App() {
   // - s là state cũ (vd { body: 1, eyes: 1, hair: 1 })
   // - { ...s, [key]: value } → sao chép toàn bộ s, rồi thay giá trị ở key bằng value
   const onChange = (key, value) => {
-    setState((s) => ({ ...s, [key]: value }));
+    setAvatar((s) => ({ ...s, [key]: value }));
   };
 
   // Mục đích: Gom cấu hình của các phần (body/eyes/hair/...) vào một mảng, để có thể .map() và render nhiều PartList mà không phải lặp code
-  const parts = [
-    { title: "Body", partKey: "body", total: total.body },
-    { title: "Mouths", partKey: "mouths", total: total.mouths },
-    { title: "Eyebrows", partKey: "eyebrows", total: total.eyebrows },
-    { title: "Eyes", partKey: "eyes", total: total.eyes },
-    { title: "Hair", partKey: "hair", total: total.hair },
-    {
-      title: "Clothing 1",
-      partKey: "clothing1",
-      total: total.clothing1,
-    },
-    {
-      title: "Clothing 2",
-      partKey: "clothing2",
-      total: total.clothing2,
-    },
-    {
-      title: "Clothing 3",
-      partKey: "clothing3",
-      total: total.clothing3,
-    },
-    {
-      title: "Glasses",
-      partKey: "glasses",
-      total: total.glasses,
-    },
-    { title: "Hats", partKey: "hats", total: total.hats },
-  ];
-
-  // Random all phần tử obj total
-  // - Duyệt qua toàn bộ keys của obj total, mỗi key 1 số ngẫu nhiên
-  // - Gộp lại thành 1 obj để setStatetal
-  const keys = Object.keys(total); // ["body","eyes","hair",...]
-  const randomize = () => {
+  const randomize = useCallback(() => {
     const next = {};
-    keys.forEach((key) => {
-      const max = total[key];
-      const randomValue = Math.floor(Math.random() * max) + 1;
-      next[key] = randomValue;
+    Object.entries(parts).forEach(([key, value]) => {
+      next[key] = Math.floor(Math.random() * value.total) + 1;
     });
+
     console.log("Random Obj:", next);
-    setState(next);
-  };
+    setAvatar(next);
+  }, [setAvatar]);
 
   return (
     <main className="app-container">
@@ -85,18 +93,7 @@ function App() {
         <section id="avatar-preview">
           <h2 id="preview-heading">Avatar Preview</h2>
           <figure className="avatar">
-            <Avatar
-              body={state.body}
-              eyes={state.eyes}
-              hair={state.hair}
-              mouths={state.mouths}
-              eyebrows={state.eyebrows}
-              clothing1={state.clothing1}
-              clothing2={state.clothing2}
-              clothing3={state.clothing3}
-              glasses={state.glasses}
-              hats={state.hats}
-            />
+            <Avatar {...avatar} />
           </figure>
           <button className="btn-random" onClick={randomize}>
             🎲 RANDOMIZE
@@ -106,13 +103,12 @@ function App() {
         {/* LISTS */}
         <section id="parts">
           <h2 id="parts-heading">Customize Parts</h2>
-          {parts.map((p) => (
+          {Object.entries(parts).map(([key, value]) => (
             <PartList
-              key={p.partKey}
-              title={p.title}
-              partKey={p.partKey}
-              total={p.total}
-              value={state[p.partKey]}
+              title={value.title}
+              partKey={key}
+              total={value.total}
+              value={avatar[key]}
               onChange={onChange}
             />
           ))}
